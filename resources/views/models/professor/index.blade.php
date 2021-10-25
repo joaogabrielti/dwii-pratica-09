@@ -19,7 +19,7 @@
                 <td class="text-center">
                     <a class="link-primary mx-1" href="{{ route('professor.edit', ['professor' => $professor->id]) }}"><i class="bi bi-pencil-fill"></i></a>
                     <a class="link-danger mx-1" href="#" onclick="document.querySelector('#delete-{{ $professor->id }}').submit()"><i class="bi bi-trash-fill"></i></a>
-                    <form id="delete-{{ $professor->id }}" action="{{ route('professor.destroy', ['professor' => $professor->id]) }}">
+                    <form id="delete-{{ $professor->id }}" action="{{ route('professor.destroy', ['professor' => $professor->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                     </form>

@@ -21,7 +21,7 @@
                 <td class="text-center">
                     <a class="link-primary mx-1" href="{{ route('disciplina.edit', ['disciplina' => $disciplina->id]) }}"><i class="bi bi-pencil-fill"></i></a>
                     <a class="link-danger mx-1" href="#" onclick="document.querySelector('#delete-{{ $disciplina->id }}').submit()"><i class="bi bi-trash-fill"></i></a>
-                    <form id="delete-{{ $disciplina->id }}" action="{{ route('disciplina.destroy', ['disciplina' => $disciplina->id]) }}">
+                    <form id="delete-{{ $disciplina->id }}" action="{{ route('disciplina.destroy', ['disciplina' => $disciplina->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                     </form>

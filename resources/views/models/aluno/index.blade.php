@@ -30,7 +30,7 @@
                     <a class="link-primary mx-1" href="{{ route('aluno.edit', ['aluno' => $aluno->id]) }}"><i class="bi bi-pencil-fill"></i></a>
                     <a class="link-secondary mx-1" href=""><i class="bi bi-gear-fill"></i></a>
                     <a class="link-danger mx-1" href="#" onclick="document.querySelector('#delete-{{ $aluno->id }}').submit()"><i class="bi bi-trash-fill"></i></a>
-                    <form id="delete-{{ $aluno->id }}" action="{{ route('aluno.destroy', ['aluno' => $aluno->id]) }}">
+                    <form id="delete-{{ $aluno->id }}" action="{{ route('aluno.destroy', ['aluno' => $aluno->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                     </form>
