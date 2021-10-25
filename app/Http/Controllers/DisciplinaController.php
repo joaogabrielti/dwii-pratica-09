@@ -12,7 +12,8 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+        $disciplinas = Disciplina::all();
+        return view('models.disciplina.index', compact('disciplinas'));
     }
 
     /**
@@ -21,7 +22,7 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('models.disciplina.create');
     }
 
     /**
@@ -31,7 +32,13 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'professor_id' => ['required', 'numeric', 'min:1'],
+            'curso_id' => ['required', 'numeric', 'min:1']
+        ]);
+        Disciplina::create($validatedData);
+        return redirect(route('disciplina.index'));
     }
 
     /**
@@ -41,7 +48,7 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Disciplina $disciplina) {
-        //
+        return redirect(route('disciplina.index'));
     }
 
     /**
@@ -51,7 +58,7 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Disciplina $disciplina) {
-        //
+        return view('models.disciplina.create', compact('disciplina'));
     }
 
     /**
@@ -62,7 +69,13 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Disciplina $disciplina) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'professor_id' => ['required', 'numeric', 'min:1'],
+            'curso_id' => ['required', 'numeric', 'min:1']
+        ]);
+        $disciplina->update($validatedData);
+        return redirect(route('disciplina.index'));
     }
 
     /**
@@ -72,6 +85,7 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Disciplina $disciplina) {
-        //
+        $disciplina->delete();
+        return redirect(route('disciplina.index'));
     }
 }

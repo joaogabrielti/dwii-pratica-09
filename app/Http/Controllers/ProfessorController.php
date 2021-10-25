@@ -12,7 +12,8 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+        $professors = Professor::all();
+        return view('models.professor.index', compact('professors'));
     }
 
     /**
@@ -21,7 +22,7 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('models.professor.create');
     }
 
     /**
@@ -31,7 +32,12 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'email' => ['required', 'email', 'min:8', 'max:255']
+        ]);
+        Professor::create($validatedData);
+        return redirect(route('professor.index'));
     }
 
     /**
@@ -41,7 +47,7 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Professor $professor) {
-        //
+        return redirect(route('professor.index'));
     }
 
     /**
@@ -51,7 +57,7 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Professor $professor) {
-        //
+        return view('models.professor.create', compact('professor'));
     }
 
     /**
@@ -62,7 +68,12 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Professor $professor) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'email' => ['required', 'email', 'min:8', 'max:255']
+        ]);
+        $professor->update($validatedData);
+        return redirect(route('professor.index'));
     }
 
     /**
@@ -72,6 +83,7 @@ class ProfessorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Professor $professor) {
-        //
+        $professor->delete();
+        return redirect(route('professor.index'));
     }
 }
