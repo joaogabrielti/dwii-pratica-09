@@ -12,7 +12,8 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+        $alunos = Aluno::all();
+        return view('models.aluno.index', compact('alunos'));
     }
 
     /**
@@ -21,7 +22,7 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('models.aluno.create');
     }
 
     /**
@@ -31,7 +32,13 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'email' => ['required', 'email', 'min:8', 'max:255'],
+            'curso_id' => ['required', 'numeric', 'min:1']
+        ]);
+        Aluno::create($validatedData);
+        return redirect(route('aluno.index'));
     }
 
     /**
@@ -41,7 +48,7 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Aluno $aluno) {
-        //
+        return redirect(route('aluno.index'));
     }
 
     /**
@@ -51,7 +58,7 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Aluno $aluno) {
-        //
+        return view('models.aluno.create', compact('aluno'));
     }
 
     /**
@@ -62,7 +69,13 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Aluno $aluno) {
-        //
+        $validatedData = $request->validate([
+            'nome' => ['required', 'string', 'min:8', 'max:255'],
+            'email' => ['required', 'email', 'min:8', 'max:255'],
+            'curso_id' => ['required', 'numeric', 'min:1']
+        ]);
+        $aluno->update($validatedData);
+        return redirect(route('aluno.index'));
     }
 
     /**
@@ -72,6 +85,7 @@ class AlunoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Aluno $aluno) {
-        //
+        $aluno->delete();
+        return redirect(route('aluno.index'));
     }
 }

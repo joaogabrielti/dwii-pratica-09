@@ -11,4 +11,12 @@ class Matricula extends Model {
     protected $fillable = [
         'aluno_id', 'disciplina_id'
     ];
+
+    public function aluno() {
+        return $this->belongsTo(Aluno::class);
+    }
+
+    public function disciplina() {
+        return $this->belongsTo(Disciplina::class);
+    }
 }
