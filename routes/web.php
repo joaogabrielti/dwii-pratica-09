@@ -25,3 +25,6 @@ Route::resource('curso', CursoController::class);
 Route::resource('disciplina', DisciplinaController::class);
 Route::resource('professor', ProfessorController::class);
 Route::resource('aluno', AlunoController::class);
+
+Route::get('aluno/{aluno}/edit-matricula', [AlunoController::class, 'editMatriculas'])->name('aluno.editMatriculas');
+Route::put('aluno/{aluno}/edit-matricula', [AlunoController::class, 'updateMatriculas']);

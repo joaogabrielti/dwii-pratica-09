@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Models\Matricula;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlunoController extends Controller {
     /**
@@ -86,6 +88,37 @@ class AlunoController extends Controller {
      */
     public function destroy(Aluno $aluno) {
         $aluno->delete();
+        return redirect(route('aluno.index'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Aluno  $aluno
+     * @return \Illuminate\Http\Response
+     */
+    public function editMatriculas(Aluno $aluno) {
+        return view('models.aluno.matricula', compact('aluno'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Aluno  $aluno
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMatriculas(Request $request, Aluno $aluno) {
+        // Limpa as matrículas
+        DB::table('matriculas')->where('aluno_id', $aluno->id)->delete();
+
+        // Recadastra as matrículas selecionadas no formulário
+        foreach ($request->disciplinas as $disciplina)
+            Matricula::create([
+                'aluno_id' => $aluno->id,
+                'disciplina_id' => $disciplina
+            ]);
+
         return redirect(route('aluno.index'));
     }
 }
